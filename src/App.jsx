@@ -45,6 +45,17 @@ const handleEdit=(index)=>{
   
   }
 
+const handleCheck=()=>{
+  let importancia=document.getElementById('myCheck')
+  let bloque=document.getElementByid('aviso')
+
+  if(importancia===true){
+    document.getElementByid('aviso').style.backgroundColor='red'
+  }{
+    bloque.style.display='none'
+  }
+}
+
 
  
   return (
@@ -69,7 +80,7 @@ const handleEdit=(index)=>{
             </Form.Group>
 
             <div style={{display:'flex',alignContent:'start',justifyContent:'start', marginBottom:'15px'}}>
-              <input type="checkbox" id="myCheck" />
+              <input type="checkbox" id="myCheck" onChange={() => handleCheck()}/>
               <label> &nbsp;¿Soy Importante?</label>
             </div>
 
@@ -87,8 +98,8 @@ const handleEdit=(index)=>{
             <Col sm={6} key={index}>
            
             <Card style={{ width: '18rem', marginTop:'18px'}}>
-              <div style={{backgroundColor:'gray',alignContent:'start',justifyContent:'start'}}>
-              <input type="checkbox" id='text'/>
+              <div id='aviso' style={{alignContent:'start',justifyContent:'start'}}>
+              <input type="checkbox" />
               <label> &nbsp;Soy Importante, ¡¡no me olvides!!</label>
             
               </div>
