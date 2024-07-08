@@ -12,24 +12,34 @@ const [titulo,SetTitulo]=useState('');
 const [descripcion,SetDescripcion]=useState('');
 const [fecha,SetFecha]=useState('')
 const [editIndex,setEditIndex]=useState(null);
+const [importa,SetImporta]=useState(null)
 
+const [variableSinValor,SetVariableSinValor]=useState(null)
 
 const handleSubmit=(event)=>{
   event.preventDefault();
+  console.log(recordatorios)
+if(document.getElementById('myCheck').checked){
+  SetVariableSinValor(1)
+}else{
+  SetVariableSinValor(0)
+}
+console.log(variableSinValor)
 
 if(editIndex !== null){
   const nuevosRecordatorios=[...recordatorios];
-  nuevosRecordatorios[editIndex]={ titulo,descripcion,fecha}
+  nuevosRecordatorios[editIndex]={ titulo,descripcion,fecha,importa}
  setRecordatorios(nuevosRecordatorios)
  setEditIndex(null)
 
 }else{
-  setRecordatorios([...recordatorios,{titulo,descripcion,fecha}])
+  setRecordatorios([...recordatorios,{titulo,descripcion,fecha,importa}])
 }
 
 SetTitulo('')
 SetDescripcion('')
 SetFecha('')
+SetImporta(null)
 }
 const handleDelete=(index)=>{
 const nuevosRecordatorios=[...recordatorios];
@@ -41,24 +51,10 @@ const handleEdit=(index)=>{
     SetTitulo(recordatorios[index].titulo);
     SetDescripcion(recordatorios[index].descripcion);
     SetFecha(recordatorios[index].fecha)
+    SetImporta(recordatorios[index].importa)
     setEditIndex(index);
   
   }
-
-//no funciono como queria, o no lo supe hacer realmente
-const handleCheck=()=>{
-  let importancia=document.getElementById('myCheck')
-  let bloque=document.getElementByid('aviso')
-  let casilla=document.getElementByid('casilla')
-
-  if(importancia.checked){
-    bloque.style.backgroundColor='red'
-    casilla.checked=true
-  }{
-    bloque.style.display='none'
-  }
-}
-
 
  
   return (
@@ -70,23 +66,23 @@ const handleCheck=()=>{
         
             <Form.Group className="mb-3">
               <Form.Label style={{fontWeight:'bold',fontSize:'25px'}}>Titulo del Recordatorio</Form.Label>
-              <Form.Control type="text" placeholder="Ingrese el titulo que tendra el recordatorio" value={titulo} onChange={(e)=>SetTitulo(e.target.value)} />
+              <Form.Control required type="text" placeholder="Ingrese el titulo que tendra el recordatorio" value={titulo} onChange={(e)=>SetTitulo(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Descripción</Form.Label>
-              <Form.Control type="text" placeholder="¿Que debe recordar?" value={descripcion} onChange={(e)=>SetDescripcion(e.target.value)}/>
+              <Form.Control required type="text" placeholder="¿Que debe recordar?" value={descripcion} onChange={(e)=>SetDescripcion(e.target.value)}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Fecha</Form.Label>
-              <Form.Control min={'01-01-2024'} type="date" placeholder="DD/MM/YYYY" value={fecha} onChange={(e)=>SetFecha(e.target.value)}/>
+              <Form.Control required min={'01-01-2024'} type="date" placeholder="DD/MM/YYYY" value={fecha} onChange={(e)=>SetFecha(e.target.value)}/>
             </Form.Group>
 
             <div style={{display:'flex',alignContent:'start',justifyContent:'start', marginBottom:'15px'}}>
               <label>
-                <input type="checkbox" id="myCheck" onChange={() => handleCheck()}/>
+                <input type="checkbox" id="myCheck"/>
                  &nbsp;¿Soy Importante?
-                 </label>
+                </label>
             </div>
 
             <Button type="submit" style={{margin:'0 0 20px'}}>
@@ -98,18 +94,13 @@ const handleCheck=()=>{
         </Col>
       </Row>
       <Row>
-        {
+        {  
           recordatorios.map((recordatorios,index)=>(
             <Col sm={6} key={index}>
            
             <Card style={{ width: '18rem', marginTop:'18px'}}>
-              <div id='aviso' style={{alignContent:'start',justifyContent:'start'}}>
-              <label> 
-                <input type="checkbox" id='casilla'/>
-                &nbsp;¿Sigo siendo importante?
-                </label>
+            {variableSinValor===1 ? 'Soy Importante' : 'No soy importante'}
             
-              </div>
               <Card.Body>
                 <Card.Title style={{textTransform:'capitalize'}}>{recordatorios.titulo}</Card.Title>
                 <Card.Text>{recordatorios.descripcion}</Card.Text>
