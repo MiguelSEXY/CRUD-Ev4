@@ -12,6 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body{
+  background-image: url('https://images.pexels.com/photos/3375674/pexels-photo-3375674.jpeg?cs=srgb&dl=pexels-luca-chiandoni-1804165-3375674.jpg&fm=jpg');
+  background-position: 40% 70%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 a {
   font-weight: 500;
